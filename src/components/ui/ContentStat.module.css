@@ -1,0 +1,6 @@
+.contentStatOuter {
+	display: block;
+	width: 5rem;
+	border-radius: 1.25rem;
+	background-color: rgba(255, 255, 255, 0.1);
+}

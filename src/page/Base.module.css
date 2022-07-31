@@ -1,0 +1,21 @@
+.heading {
+    display: block;
+    padding-top: 2rem;
+    font-size: 2rem;
+}
+
+.subheading {
+    display: block;
+    filter: opacity(0.2);
+    padding-bottom: 2rem;
+}
+
+.baseOuterContainer {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #191919;
+    text-align: center;
+}

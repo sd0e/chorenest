@@ -1,0 +1,77 @@
+.leftBarOuter {
+	height: 100%;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.leftBarLogo {
+	color: #ffffff;
+	filter: opacity(0.2);
+	font-size: 2rem;
+	font-weight: 600;
+	display: inline-block;
+	margin-bottom: 1rem;
+}
+
+.leftBarLogo:hover {
+	filter: opacity(0.6);
+	transform: scale(1.05);
+}
+
+.leftBarLogoSelected {
+	color: #ffffff;
+	filter: opacity(1);
+	font-size: 2rem;
+	font-weight: 600;
+	display: inline-block;
+	margin-bottom: 1rem;
+}
+
+.leftBarLogoLink {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.leftBarIcon {
+	display: inline-block;
+	color: #ffffff;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	filter: opacity(0.2);
+	transition: 0.1s ease-in-out;
+}
+
+.leftBarIconBottom {
+	display: inline-block;
+	color: #ffffff;
+	margin-top: 1rem;
+	filter: opacity(0.2);
+	transition: 0.1s ease-in-out;
+}
+
+.leftBarIcon:hover, .leftBarIconBottom:hover {
+	filter: opacity(0.6);
+	transform: scale(1.05);
+}
+
+.leftBarIconSelected {
+	display: inline-block;
+	color: #ffffff;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	filter: opacity(1.0);
+}
+
+.leftBarIconSelectedBottom {
+	display: inline-block;
+	color: #ffffff;
+	margin-top: 1rem;
+	filter: opacity(1.0);
+}
+
+.leftBarButtonLink {
+	color: #ffffff;
+	text-decoration: none;
+}
