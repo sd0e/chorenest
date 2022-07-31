@@ -12,7 +12,7 @@ export default function LeftBar() {
 		<div className={classes.leftBarOuter}>
 			<div>
 				<Link className={classes.leftBarLogoLink} to="/">
-					<span className={path === '/' ? classes.leftBarLogoSelected : classes.leftBarLogo}>e</span>
+					<span className={path === '/' ? classes.leftBarLogoSelected : classes.leftBarLogo}>n</span>
 				</Link>
 				<LeftBarButton Icon={SchoolOutlined} Path="/learn" />
 				<LeftBarButton Icon={SourceOutlined} Path="/sources" />
