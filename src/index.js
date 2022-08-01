@@ -5,6 +5,8 @@ import firebaseApp from './firebase/initialize';
 import './index.css';
 import App from './App';
 
+const firebase = firebaseApp;
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
