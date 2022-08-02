@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createTheme, ThemeProvider, IconButton, SwipeableDrawer } from '@mui/material';
-import { Menu, MotionPhotosAuto } from '@mui/icons-material';
+import { Menu } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 import classes from './Layout.module.css';
