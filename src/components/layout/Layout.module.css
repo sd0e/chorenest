@@ -17,3 +17,64 @@
 	height: calc(100% - 4rem);
 	overflow-y: auto;
 }
+
+.mobileHolder {
+	display: block;
+	height: 100%;
+}
+
+.mobileLeftBarHolder {
+	width: 2.5rem;
+	padding: 1.5rem;
+	height: calc(100% - 3rem);
+	overflow-y: auto;
+	background-color: #191919;
+}
+
+.mobileHeader {
+	width: 100%;
+	height: 4rem;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #191919;
+	display: flex;
+	align-items: center;
+}
+
+.mobileMenuButtonHolder {
+	display: inline-flex;
+	height: 4rem;
+	width: 4rem;
+	align-items: center;
+	margin-left: 1.25rem;
+	filter: opacity(0.2);
+}
+
+.mobileHeaderLogoLink {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.mobileHeaderLogoHolder {
+	display: inline-flex;
+	height: 4rem;
+	align-items: center;
+}
+
+.mobileHeaderLogo {
+	color: #ffffff;
+	font-size: 1.8rem;
+	font-weight: 600;
+	display: inline-block;
+	line-height: 4rem;
+	margin-bottom: 0.25rem;
+	vertical-align: center;
+}
+
+.mobilePageHolder {
+	width: calc(100vw - 4rem);
+	padding: 5rem 2rem 2rem 2rem;
+	height: calc(100% - 7rem);
+	overflow-y: auto;
+}
