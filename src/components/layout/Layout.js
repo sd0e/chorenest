@@ -22,10 +22,34 @@ export default function Layout({ children }) {
 	window.addEventListener('resize', checkIsMobile, true);
 
 	const theme = createTheme({
-		palette: {
-			mode: 'dark',
+        palette: {
+            mode: 'dark',
+        },
+        typography: {
+            fontFamily: [
+                '"Inter"',
+                '-apple-system',
+                'BlinkMacSystemFont',
+                '"Segoe UI"',
+                'Roboto',
+                '"Helvetica Neue"',
+                'Arial',
+                'sans-serif',
+                '"Apple Color Emoji"',
+                '"Segoe UI Emoji"',
+                '"Segoe UI Symbol"',
+              ].join(','),
+        },
+		components: {
+			MuiButton: {
+				styleOverrides: {
+					root: {
+						fontFamily: '"Inter", sans-serif',
+					},
+				},
+			},
 		},
-	});
+    });
 
 	if (isMobile) {
 		return (
@@ -60,12 +84,14 @@ export default function Layout({ children }) {
 	} else {
 		return (
 			<div className={classes.layoutOuter}>
-				<div className={classes.leftBarHolder}>
-					<LeftBar />
-				</div>
-				<div className={classes.pageHolder}>
-					{ children }
-				</div>
+				<ThemeProvider theme={theme}>
+					<div className={classes.leftBarHolder}>
+						<LeftBar />
+					</div>
+					<div className={classes.pageHolder}>
+						{ children }
+					</div>
+				</ThemeProvider>
 			</div>
 		)
 	}

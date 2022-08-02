@@ -7,9 +7,6 @@ function App() {
         <BrowserRouter>
             <PageRoutes />
         </BrowserRouter>
-        // <div className="App">
-            
-        // </div>
     );
 }
 
