@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { createTheme, ThemeProvider, Dialog, fabClasses } from '@mui/material';
 import { getAuth } from '@firebase/auth';
 
 import Layout from './Layout';
 import Home from '../../page/Home';
-import Learn from '../../page/Learn';
-import Sources from '../../page/Sources';
+import Chores from '../../page/Chores';
+import People from '../../page/People';
 import Insights from '../../page/Insights';
 import Leaderboard from '../../page/Leaderboard';
 import Settings from '../../page/Settings';
@@ -53,20 +52,14 @@ export default function PageRoutes() {
             }
         });
     }, []);
-    
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-        },
-    });
 
     if (user && user !== 'Loading') {
 		return (
 			<AnimatePresence exitBeforeEnter>
                 <Routes location={location} key={location.pathname}>
                     <Route path="/" element={<Layout><Home /></Layout>} />
-                    <Route path="/learn" element={<Layout><Learn /></Layout>} />
-                    <Route path="/sources" element={<Layout><Sources /></Layout>} />
+                    <Route path="/chores" element={<Layout><Chores /></Layout>} />
+                    <Route path="/people" element={<Layout><People /></Layout>} />
                     <Route path="/insights" element={<Layout><Insights /></Layout>} />
                     <Route path="/leaderboard" element={<Layout><Leaderboard /></Layout>} />
                     <Route path="/settings" element={<Layout><Settings /></Layout>} />

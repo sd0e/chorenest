@@ -1,5 +1,5 @@
 import React from 'react';
-import { SchoolOutlined, SourceOutlined, InsightsOutlined, LeaderboardOutlined, SettingsOutlined, AccountCircleOutlined } from '@mui/icons-material';
+import { InsightsOutlined, LeaderboardOutlined, SettingsOutlined, AccountCircleOutlined, TaskAltOutlined, FaceOutlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 import classes from './LeftBar.module.css';
@@ -14,8 +14,8 @@ export default function LeftBar({ Click }) {
 				<Link className={classes.leftBarLogoLink} to="/" onClick={Click}>
 					<span className={path === '/' ? classes.leftBarLogoSelected : classes.leftBarLogo}>n</span>
 				</Link>
-				<LeftBarButton Icon={SchoolOutlined} Path="/learn" Click={Click} />
-				<LeftBarButton Icon={SourceOutlined} Path="/sources" Click={Click} />
+				<LeftBarButton Icon={TaskAltOutlined} Path="/chores" Click={Click} />
+				<LeftBarButton Icon={FaceOutlined} Path="/people" Click={Click} />
 				<LeftBarButton Icon={InsightsOutlined} Path="/insights" Click={Click} />
 				<LeftBarButton Icon={LeaderboardOutlined} Path="/leaderboard" Click={Click} />
 			</div>
