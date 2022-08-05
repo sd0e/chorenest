@@ -28,27 +28,39 @@ export default function PageRoutes() {
 		lastTriggered = new Date().getTime();
 	}
     
+    // !! TODO: fetches householdId even if users/$uid/setup is false
+
     useEffect(() => {
         // triggers every time the user's status changes
-        getAuth().onAuthStateChanged(user => {
+        getAuth().onAuthStateChanged(userFetched => {
             // limit requests to every 20 ms
             if (!lastTriggered || new Date().getTime() - lastTriggered >= 20) {
                 newLastTriggered();
                 // last trigger was more than 20 ms ago
                 
-                setUser(user);
+                fetch(`/users/${userFetched.uid}/householdId`).then(householdId => {
+                    userFetched['householdId'] = householdId;
+                    
+                    fetch(`/households/${householdId}/users/${userFetched.uid}`).then(householdUserInfo => {
+                        userFetched['admin'] = householdUserInfo.admin;
+                        userFetched['approved'] = householdUserInfo.approved;
+                        userFetched['nickname'] = householdUserInfo.nickname;
 
-                if (user && user !== 'Loading') {
-                    // display a popup to add a PWA app if not shown before and on mobile
-                    // if (window.innerWidth < 550) {
-                    //     fetch(`/users/${user.uid}/pwaAlertShown`).then(pwaAlertShown => {
-                    //         if (!pwaAlertShown) {
-                    //             setPwaPopupOpen(true);
-                    //             write(`/users/${user.uid}/pwaAlertShown`, true);
-                    //         }
-                    //     });
-                    // }
-                };
+                        setUser(userFetched);
+
+                        if (userFetched && userFetched !== 'Loading') {
+                            // display a popup to add a PWA app if not shown before and on mobile
+                            // if (window.innerWidth < 550) {
+                            //     fetch(`/users/${user.uid}/pwaAlertShown`).then(pwaAlertShown => {
+                            //         if (!pwaAlertShown) {
+                            //             setPwaPopupOpen(true);
+                            //             write(`/users/${user.uid}/pwaAlertShown`, true);
+                            //         }
+                            //     });
+                            // }
+                        };
+                    });
+                });
             }
         });
     }, []);
@@ -59,7 +71,7 @@ export default function PageRoutes() {
                 <Routes location={location} key={location.pathname}>
                     <Route path="/" element={<Layout><Home /></Layout>} />
                     <Route path="/chores" element={<Layout><Chores /></Layout>} />
-                    <Route path="/people" element={<Layout><People /></Layout>} />
+                    <Route path="/people" element={<Layout><People user={user} /></Layout>} />
                     <Route path="/insights" element={<Layout><Insights /></Layout>} />
                     <Route path="/leaderboard" element={<Layout><Leaderboard /></Layout>} />
                     <Route path="/settings" element={<Layout><Settings /></Layout>} />

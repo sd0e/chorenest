@@ -1,0 +1,5 @@
+.personStatusOuter {
+    display: flex;
+    height: 2rem;
+    align-items: center;
+}
