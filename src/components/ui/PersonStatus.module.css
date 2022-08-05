@@ -1,5 +1,13 @@
 .personStatusOuter {
     display: flex;
-    height: 2rem;
+    height: 1rem;
     align-items: center;
+    margin-left: 0.25rem;
+}
+
+.text {
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
 }

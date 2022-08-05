@@ -7,6 +7,7 @@ import PersonInfo from '../components/ui/PersonInfo';
 
 export default function People({ user }) {
 	const [userList, setUserList] = useState('Loading');
+	const [owner, setOwner] = useState('Loading');
 
 	let lastTriggered = 0;
 
@@ -14,15 +15,22 @@ export default function People({ user }) {
 		lastTriggered = new Date().getTime();
 	}
 
+	const fetchUsers = () => {
+		if (user.approved) {
+			fetch(`/households/${user.householdId}/users`).then(users => {
+				setUserList(users);
+
+				fetch(`/households/${user.householdId}/owner`).then(fetchedOwner => {
+					setOwner(fetchedOwner);
+				})
+			});
+		}
+	}
+
 	useEffect(() => {
 		if (!lastTriggered || new Date().getTime() - lastTriggered >= 20) {
 			newLastTriggered();
-		
-			if (user.approved) {
-				fetch(`/households/${user.householdId}/users`).then(users => {
-					setUserList(users);
-				});
-			}
+			fetchUsers();
 		}
 	}, []);
 
@@ -30,13 +38,13 @@ export default function People({ user }) {
 		<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} style={{ height: "100%" }}>
 			<Header Title="People" />
 			{ user.approved ?
-				userList === 'Loading' ?
+				userList === 'Loading' || owner === 'Loading' ?
 					<span>Loading</span>
 				:
 					<div>
 						{Object.keys(userList).map((userId, idx) => {
 							const userInfo = userList[userId];
-							return <PersonInfo json={userInfo} userId={userId} first={idx === 0} uid={user.uid} />
+							return <PersonInfo json={userInfo} userId={userId} first={idx === 0} uid={user.uid} key={userId} change={fetchUsers} isAdmin={user.admin} owner={owner} householdId={user.householdId} />
 						})}
 					</div>
 			:

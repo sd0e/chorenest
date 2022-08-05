@@ -1,5 +1,35 @@
 .personInfoOuter {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 2rem;
+    padding: 2rem 2rem 2rem 1.75rem;
     border-radius: 1rem;
+}
+
+.nickname {
+    display: block;
+    margin-top: 1.5rem;
+    font-weight: 600;
+    font-size: 1.7rem;
+    margin-left: 0.25rem;
+}
+
+.email {
+    display: block;
+    margin-top: 0.7rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-left: 0.25rem;
+}
+
+.adminToggleHolder {
+    display: flex;
+    justify-content: center;
+}
+
+.adminToggleText {
+    font-weight: 600;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    margin-top: 0.1rem;
+    font-size: 0.95rem;
 }
