@@ -37,30 +37,36 @@ export default function PageRoutes() {
             if (!lastTriggered || new Date().getTime() - lastTriggered >= 20) {
                 newLastTriggered();
                 // last trigger was more than 20 ms ago
-                
-                fetch(`/users/${userFetched.uid}/householdId`).then(householdId => {
-                    userFetched['householdId'] = householdId;
-                    
-                    fetch(`/households/${householdId}/users/${userFetched.uid}`).then(householdUserInfo => {
-                        userFetched['admin'] = householdUserInfo.admin;
-                        userFetched['approved'] = householdUserInfo.approved;
-                        userFetched['nickname'] = householdUserInfo.nickname;
 
-                        setUser(userFetched);
+                console.log(userFetched);
 
-                        if (userFetched && userFetched !== 'Loading') {
-                            // display a popup to add a PWA app if not shown before and on mobile
-                            // if (window.innerWidth < 550) {
-                            //     fetch(`/users/${user.uid}/pwaAlertShown`).then(pwaAlertShown => {
-                            //         if (!pwaAlertShown) {
-                            //             setPwaPopupOpen(true);
-                            //             write(`/users/${user.uid}/pwaAlertShown`, true);
-                            //         }
-                            //     });
-                            // }
-                        };
+                if (userFetched) {
+                    fetch(`/users/${userFetched.uid}/householdId`).then(householdId => {
+                        userFetched['householdId'] = householdId;
+                        
+                        fetch(`/households/${householdId}/users/${userFetched.uid}`).then(householdUserInfo => {
+                            userFetched['admin'] = householdUserInfo.admin;
+                            userFetched['approved'] = householdUserInfo.approved;
+                            userFetched['nickname'] = householdUserInfo.nickname;
+    
+                            setUser(userFetched);
+    
+                            if (userFetched && userFetched !== 'Loading') {
+                                // display a popup to add a PWA app if not shown before and on mobile
+                                // if (window.innerWidth < 550) {
+                                //     fetch(`/users/${user.uid}/pwaAlertShown`).then(pwaAlertShown => {
+                                //         if (!pwaAlertShown) {
+                                //             setPwaPopupOpen(true);
+                                //             write(`/users/${user.uid}/pwaAlertShown`, true);
+                                //         }
+                                //     });
+                                // }
+                            };
+                        });
                     });
-                });
+                } else {
+                    setUser(userFetched);
+                }
             }
         });
     }, []);
