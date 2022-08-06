@@ -76,7 +76,7 @@ export default function PageRoutes() {
 			<AnimatePresence exitBeforeEnter>
                 <Routes location={location} key={location.pathname}>
                     <Route path="/" element={<Layout><Home /></Layout>} />
-                    <Route path="/chores" element={<Layout><Chores /></Layout>} />
+                    <Route path="/chores" element={<Layout><Chores user={user} /></Layout>} />
                     <Route path="/people" element={<Layout><People user={user} /></Layout>} />
                     <Route path="/insights" element={<Layout><Insights /></Layout>} />
                     <Route path="/leaderboard" element={<Layout><Leaderboard /></Layout>} />
