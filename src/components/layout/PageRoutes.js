@@ -38,8 +38,6 @@ export default function PageRoutes() {
                 newLastTriggered();
                 // last trigger was more than 20 ms ago
 
-                console.log(userFetched);
-
                 if (userFetched) {
                     fetch(`/users/${userFetched.uid}/householdId`).then(householdId => {
                         userFetched['householdId'] = householdId;
