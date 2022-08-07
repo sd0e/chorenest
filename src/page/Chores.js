@@ -10,7 +10,9 @@ export default function Chores({ user }) {
 
 	const handleTypeChange = (e, newAlignment) => {
 		if (newAlignment) {
-			setChoreType(newAlignment);
+			if (user.admin || newAlignment === 'you') {
+				setChoreType(newAlignment);
+			}
 		}
 	}
 
@@ -39,12 +41,12 @@ export default function Chores({ user }) {
 		<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} style={{ height: "100%" }}>
 			<Header Title="Chores" />
 			<ThemeProvider theme={theme}>
-				{ user.admin && <ToggleButtonGroup color="primary" value={choreType} exclusive onChange={handleTypeChange}>
-					<ToggleButton value="you">
+				{ user.admin && <ToggleButtonGroup value={choreType} exclusive onChange={handleTypeChange}>
+					<ToggleButton value="you" color="primary">
 						<AccountCircleOutlined fontSize="small" style={{ marginRight: '0.5rem' }} />
 						You
 					</ToggleButton>
-					<ToggleButton value="all">
+					<ToggleButton value="all" color="warning">
 						<PeopleAltOutlined fontSize="small" style={{ marginRight: '0.5rem' }} />
 						All
 					</ToggleButton>
