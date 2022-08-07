@@ -1,0 +1,11 @@
+.choreInfoOuter {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem 2rem 2rem 2rem;
+    border-radius: 1rem;
+}
+
+.choreName {
+    display: block;
+    font-weight: 600;
+    font-size: 1.7rem;
+}
