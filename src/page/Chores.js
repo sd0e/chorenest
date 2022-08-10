@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { createTheme, ThemeProvider, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { AccountCircleOutlined, ConstructionOutlined, PeopleAltOutlined } from '@mui/icons-material';
+import { AccountCircleOutlined, PeopleAltOutlined } from '@mui/icons-material';
 
 import Header from '../Header';
 import fetch from '../firebase/fetch';
