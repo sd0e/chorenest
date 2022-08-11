@@ -80,7 +80,7 @@ export default function Chores({ user }) {
 					choreList ?
 						Object.keys(choreList).map((choreId, idx) => {
 							const choreInfo = choreList[choreId];
-							return <ChoreInfo user={user} choreId={choreId} choreInfo={choreInfo} key={choreId} first={idx === 0} />
+							return <ChoreInfo user={user} choreId={choreId} choreInfo={choreInfo} key={choreId} first={idx === 0} onComplete={fetchChores} />
 						})
 					:
 						<NoChores /> }
