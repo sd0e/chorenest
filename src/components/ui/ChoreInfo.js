@@ -1,15 +1,15 @@
 import React from 'react';
 import { createTheme, ThemeProvider, Stack } from '@mui/material';
 import { DoneAllOutlined, EventOutlined, EventRepeatOutlined } from '@mui/icons-material';
+import { utcToRelative } from 'utctorelative';
 
 import classes from './ChoreInfo.module.css';
 import ChoreStat from './ChoreStat';
 import msToFrequency from '../../scripts/msToFrequency';
 import BottomButton from './BottomButton';
 import write from '../../firebase/write';
-const utcToRelative = require('utctorelative');
 
-export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete }) {
+export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete, type }) {
     const theme = createTheme({
         palette: {
             mode: 'dark',
