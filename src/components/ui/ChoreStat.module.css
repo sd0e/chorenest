@@ -2,6 +2,11 @@
 	display: inline-block;
 }
 
+.choreStatContainerPush {
+	margin-left: 0.5rem;
+	margin-bottom: 1rem;
+}
+
 .choreStatOuter {
 	display: flex;
 	align-items: center;
@@ -9,10 +14,8 @@
 
 .choreStatIcon {
 	margin-right: 0.5rem;
-	color: rgba(255, 255, 255, 0.4);
 }
 
 .choreStatText {
 	font-weight: 600;
-	color: rgba(255, 255, 255, 0.4);
 }

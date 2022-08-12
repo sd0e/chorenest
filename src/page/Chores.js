@@ -15,6 +15,8 @@ export default function Chores({ user }) {
 	const handleTypeChange = (e, newAlignment) => {
 		if (newAlignment) {
 			if (user.admin || newAlignment === 'you') {
+				if (newAlignment !== choreType) setChoreList('Loading');
+
 				fetchChores(newAlignment);
 				setChoreType(newAlignment);
 			}
@@ -34,12 +36,13 @@ export default function Chores({ user }) {
 			activeUserChoreKeys.forEach(activeUserChoreKey => {
 				let activeUserChore = activeUserChores[activeUserChoreKey];
 				activeUserChore.id = activeUserChoreKey;
+				activeUserChore.assigneeNickname = users[userId].nickname;
 
 				allChores.push(activeUserChore);
-
-				// continue here
-			})
+			});
 		});
+
+		setChoreList(allChores);
 	}
 
 	const fetchChores = (type) => {
@@ -129,19 +132,24 @@ export default function Chores({ user }) {
 						All
 					</ToggleButton>
 				</ToggleButtonGroup> }
-				{ user.admin && <Fab color="secondary" aria-label="add" style={{ margin: 0, position: 'fixed', bottom: 50, right: 50, top: 'auto', left: 'auto' }}>
-					<AddTaskOutlined style={{ color: '#ffffff' }} />
-				</Fab> }
 				{ choreList === 'Loading' ?
 					<span>Loading</span>
 				:
 					choreList ?
-						Object.keys(choreList).map((choreId, idx) => {
-							const choreInfo = choreList[choreId];
-							return <ChoreInfo user={user} choreId={ choreType === 'you' ? choreId : choreInfo.id } choreInfo={choreInfo} key={choreId} first={idx === 0} onComplete={fetchChores} type={choreType} />
-						})
+						choreType === 'you' ?
+							Object.keys(choreList).map((choreId, idx) => {
+								const choreInfo = choreList[choreId];
+								return <ChoreInfo user={user} choreId={ choreId } choreInfo={choreInfo} key={choreId} first={idx === 0} onComplete={fetchChores} type={choreType} />
+							})
+						:
+							choreList.map((choreInfo, idx) => {
+								return <ChoreInfo user={user} choreId={ choreInfo.id } choreInfo={choreInfo} key={`chore${idx}`} first={idx === 0} onComplete={fetchChores} type={choreType} />
+							})
 					:
 						<NoChores /> }
+				{ user.admin && <Fab color="secondary" aria-label="add" style={{ margin: 0, position: 'fixed', bottom: 50, right: 50, top: 'auto', left: 'auto' }}>
+					<AddTaskOutlined style={{ color: '#ffffff' }} />
+				</Fab> }
 			</ThemeProvider>
 		</motion.div>
 	)

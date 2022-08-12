@@ -1,6 +1,6 @@
 import React from 'react';
 import { createTheme, ThemeProvider, Stack } from '@mui/material';
-import { DoneAllOutlined, EventOutlined, EventRepeatOutlined } from '@mui/icons-material';
+import { DeleteOutlined, DoneAllOutlined, EventOutlined, EventRepeatOutlined, FaceOutlined } from '@mui/icons-material';
 import { utcToRelative } from 'utctorelative';
 
 import classes from './ChoreInfo.module.css';
@@ -60,9 +60,16 @@ export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete,
         }
     }
 
+    const deleteChore = () => {
+        write(`/households/${user.householdId}/chores/active/assignee/${user.uid}/${choreId}`, null).then(() => {
+            onComplete();
+        });
+    }
+
     return (
         <div className={classes.choreInfoOuter} style={{ marginTop: first ? '0rem' : '1.75rem' }}>
             <ThemeProvider theme={theme}>
+                { type === 'all' && <ChoreStat Icon={FaceOutlined} className={classes.assigneeNickname} color="#29abe2" push>{choreInfo.assigneeNickname}</ChoreStat> }
                 <span className={classes.choreName}>{choreInfo.name}</span>
                 <Stack spacing={2} direction="column">
                     <Stack spacing={3} direction="row" className={classes.choreStatOuter}>
@@ -71,6 +78,7 @@ export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete,
                     </Stack>
                     <Stack spacing={3} direction="row">
                         <BottomButton Icon={DoneAllOutlined} onClick={completeChore} color="success">Complete</BottomButton>
+                        { user.admin && <BottomButton Icon={DeleteOutlined} onClick={deleteChore} color="error">Delete</BottomButton> }
                     </Stack>
                 </Stack>
             </ThemeProvider>
