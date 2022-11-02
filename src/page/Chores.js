@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { createTheme, ThemeProvider, ToggleButton, ToggleButtonGroup, Fab } from '@mui/material';
+import { createTheme, ThemeProvider, ToggleButton, ToggleButtonGroup, Fab, Dialog, DialogTitle, DialogContent, DialogContentText, Button, TextField } from '@mui/material';
 import { AccountCircleOutlined, AddTaskOutlined, PeopleAltOutlined } from '@mui/icons-material';
 
 import Header from '../Header';
@@ -9,6 +9,9 @@ import ChoreInfo from '../components/ui/ChoreInfo';
 import NoChores from '../components/ui/NoChores';
 
 export default function Chores({ user }) {
+	const [open, setOpen] = useState(false);
+	const [openChoreId, setOpenChoreId] = useState('');
+	const [choreName, setChoreName] = useState('');
 	const [choreType, setChoreType] = useState('you');
 	const [choreList, setChoreList] = useState('Loading');
 
@@ -97,6 +100,12 @@ export default function Chores({ user }) {
 		}
 	}, []);
 
+	const openEdit = editChoreId => {
+		setOpenChoreId(editChoreId);
+		setChoreName(choreList[editChoreId]['name']);
+		setOpen(true);
+	}
+
 	const theme = createTheme({
 		palette: {
 			mode: 'dark',
@@ -122,6 +131,29 @@ export default function Chores({ user }) {
 		<motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} style={{ height: "100%" }}>
 			<Header Title="Chores" />
 			<ThemeProvider theme={theme}>
+				<Dialog open={open} onClose={() => setOpen(false)} sx={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', backdropFilter: 'blur(5px)', height: '100%' }} component={motion.div} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}>
+					<div style={{ padding: '2rem', backgroundColor: '#141313', textAlign: 'center' }}>
+						<DialogTitle>Edit Chore</DialogTitle>
+						<DialogContent>
+							<DialogContentText>
+								Edit the selected chore
+							</DialogContentText>
+							<TextField
+								autoFocus
+								margin="dense"
+								id="name"
+								label="Name"
+								fullWidth
+								onChange={event => setChoreName(event.target.value)}
+								value={choreName}
+								style={{ marginTop: '2rem', marginBottom: '1rem' }}
+							/>
+						</DialogContent>
+
+						<Button variant="outlined" color="secondary" sx={{ marginRight: '0.5rem' }} onClick={() => setOpen(false)}>Cancel</Button>
+						<Button variant="outlined" color="primary">Create</Button>
+					</div>
+				</Dialog>
 				{ user.admin && <ToggleButtonGroup value={choreType} exclusive onChange={handleTypeChange} style={{ marginBottom: '2rem', display: 'block' }}>
 					<ToggleButton value="you" color="primary">
 						<AccountCircleOutlined fontSize="small" style={{ marginRight: '0.5rem' }} />
@@ -139,11 +171,11 @@ export default function Chores({ user }) {
 						choreType === 'you' ?
 							Object.keys(choreList).map((choreId, idx) => {
 								const choreInfo = choreList[choreId];
-								return <ChoreInfo user={user} choreId={ choreId } choreInfo={choreInfo} key={choreId} first={idx === 0} onComplete={fetchChores} type={choreType} />
+								return <ChoreInfo user={user} choreId={ choreId } choreInfo={choreInfo} key={choreId} first={idx === 0} onComplete={fetchChores} type={choreType} openEdit={() => openEdit(choreId)} />
 							})
 						:
 							choreList.map((choreInfo, idx) => {
-								return <ChoreInfo user={user} choreId={ choreInfo.id } choreInfo={choreInfo} key={`chore${idx}`} first={idx === 0} onComplete={fetchChores} type={choreType} />
+								return <ChoreInfo user={user} choreId={ choreInfo.id } choreInfo={choreInfo} key={`chore${idx}`} first={idx === 0} onComplete={fetchChores} type={choreType} openEdit={() => openEdit(choreInfo.id)} />
 							})
 					:
 						<NoChores /> }

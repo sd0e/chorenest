@@ -7,6 +7,9 @@ export default function BottomButton({ Icon, onClick, children, color = 'default
     const theme = createTheme({
         palette: {
             mode: 'dark',
+            default: {
+                main: 'rgba(255, 255, 255, 0.4)'
+            }
         },
         components: {
             MuiButton: {

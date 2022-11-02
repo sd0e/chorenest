@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createTheme, ThemeProvider, Stack } from '@mui/material';
-import { DeleteOutlined, DoneAllOutlined, EventOutlined, EventRepeatOutlined, FaceOutlined } from '@mui/icons-material';
+import { DeleteOutlined, DoneAllOutlined, EditOutlined, EventOutlined, EventRepeatOutlined, FaceOutlined } from '@mui/icons-material';
 import { utcToRelative } from 'utctorelative';
 
 import classes from './ChoreInfo.module.css';
@@ -9,7 +9,8 @@ import msToFrequency from '../../scripts/msToFrequency';
 import BottomButton from './BottomButton';
 import write from '../../firebase/write';
 
-export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete, type }) {
+export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete, type, openEdit }) {
+    const [open, setOpen] = useState(false);
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -31,6 +32,24 @@ export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete,
         }
     });
 
+    const incrementChore = () => {
+        return new Promise(resolve => {
+            write(`/households/${user.householdId}/chores/active/assignee/${user.uid}/${choreId}/repetition`, choreInfo.repetition + 1).then(() => resolve());
+        });
+    }
+
+    const moveChore = () => {
+        return new Promise(resolve => {
+            write(`/households/${user.householdId}/chores/active/assignee/${user.uid}/${choreId}`, null).then(() => {
+                let newChoreInfo = choreInfo;
+                newChoreInfo.completedTime = new Date().getTime();
+                write(`/households/${user.householdId}/chores/complete/assignee/${user.uid}/${choreId}`, newChoreInfo).then(() => {
+                    resolve();
+                });
+            });
+        });
+    }
+
     const completeChore = () => {
         if (choreInfo.repeat) {
             const newNumber = choreInfo.repetition + 1;
@@ -40,23 +59,15 @@ export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete,
                 // fixed number of repetitions
                 const numRepetitions = Number(choreInfo.repeatUntil.substr(1));
                 if (newNumber > numRepetitions) {
-                    write(`/households/${user.householdId}/chores/active/assignee/${user.uid}/${choreId}`, null).then(() => {
-                        write(`/households/${user.householdId}/chores/complete/assignee/${user.uid}/${choreId}`, choreInfo).then(() => {
-                            onComplete();
-                        });
-                    });
+                    moveChore().then(() => onComplete());
                 } else {
-                    write(`/households/${user.householdId}/chores/active/assignee/${user.uid}/${choreId}/repetition`, choreInfo.repetition + 1).then(() => onComplete());
+                    incrementChore().then(() => onComplete());
                 }
             } else {
-                write(`/households/${user.householdId}/chores/active/assignee/${user.uid}/${choreId}/repetition`, choreInfo.repetition + 1).then(() => onComplete());
+                incrementChore().then(() => onComplete());
             }
         } else {
-            write(`/households/${user.householdId}/chores/active/assignee/${user.uid}/${choreId}`, null).then(() => {
-                write(`/households/${user.householdId}/chores/complete/assignee/${user.uid}/${choreId}`, choreInfo).then(() => {
-                    onComplete();
-                });
-            });
+            moveChore().then(() => onComplete());
         }
     }
 
@@ -79,6 +90,7 @@ export default function ChoreInfo({ user, choreId, choreInfo, first, onComplete,
                     <Stack spacing={3} direction="row">
                         <BottomButton Icon={DoneAllOutlined} onClick={completeChore} color="success">Complete</BottomButton>
                         { user.admin && <BottomButton Icon={DeleteOutlined} onClick={deleteChore} color="error">Delete</BottomButton> }
+                        { user.admin && <BottomButton Icon={EditOutlined} onClick={openEdit}>Edit</BottomButton> }
                     </Stack>
                 </Stack>
             </ThemeProvider>
