@@ -7,6 +7,7 @@ import Layout from './Layout';
 import Home from '../../page/Home';
 import Chores from '../../page/Chores';
 import People from '../../page/People';
+import NewChore from '../../page/NewChore';
 import Insights from '../../page/Insights';
 import Leaderboard from '../../page/Leaderboard';
 import Settings from '../../page/Settings';
@@ -76,6 +77,7 @@ export default function PageRoutes() {
                     <Route path="/" element={<Layout><Home /></Layout>} />
                     <Route path="/chores" element={<Layout><Chores user={user} /></Layout>} />
                     <Route path="/people" element={<Layout><People user={user} /></Layout>} />
+                    <Route path="/new" element={<Layout><NewChore user={user} /></Layout>} />
                     <Route path="/insights" element={<Layout><Insights /></Layout>} />
                     <Route path="/leaderboard" element={<Layout><Leaderboard /></Layout>} />
                     <Route path="/settings" element={<Layout><Settings /></Layout>} />

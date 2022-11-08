@@ -7,6 +7,7 @@ import Header from '../Header';
 import fetch from '../firebase/fetch';
 import ChoreInfo from '../components/ui/ChoreInfo';
 import NoChores from '../components/ui/NoChores';
+import { Link } from 'react-router-dom';
 
 export default function Chores({ user }) {
 	const [open, setOpen] = useState(false);
@@ -179,9 +180,11 @@ export default function Chores({ user }) {
 							})
 					:
 						<NoChores /> }
-				{ user.admin && <Fab color="secondary" aria-label="add" style={{ margin: 0, position: 'fixed', bottom: 50, right: 50, top: 'auto', left: 'auto' }}>
-					<AddTaskOutlined style={{ color: '#ffffff' }} />
-				</Fab> }
+				{ user.admin && <Link to="/new">
+					<Fab color="secondary" aria-label="add" style={{ margin: 0, position: 'fixed', bottom: 50, right: 50, top: 'auto', left: 'auto' }}>
+						<AddTaskOutlined style={{ color: '#ffffff' }} />
+					</Fab>
+				</Link> }
 			</ThemeProvider>
 		</motion.div>
 	)
